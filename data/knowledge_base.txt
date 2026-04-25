@@ -1,0 +1,13 @@
+# SPI Knowledge Base — Historical labeled failures
+# Format: one log line per entry. Used as RAG context for new log diagnosis.
+
+[2024-01-10 09:12:03] CS_LOW MOSI=0xFF MISO=0x00 CLK=1MHz ERR: no response from slave
+[2024-01-10 09:12:04] CS_LOW MOSI=0xA5 MISO=0x00 CLK=1MHz TIMEOUT: slave not ready
+[2024-01-11 14:33:21] CS_LOW MOSI=0x3C MISO=0xFF CLK=4MHz ERR: data corruption detected
+[2024-01-11 14:33:22] CS_LOW MOSI=0x01 MISO=0x01 CLK=4MHz OK: transaction complete
+[2024-01-12 08:00:01] CS_LOW MOSI=0xFF MISO=0x00 CLK=8MHz ERR: clock glitch detected
+[2024-01-12 08:00:02] CS_LOW MOSI=0x55 MISO=0x55 CLK=8MHz OK: loopback test passed
+[2024-01-13 11:20:44] CS_HIGH MOSI=0x00 MISO=0x00 CLK=1MHz ERR: CS line stuck high
+[2024-01-14 15:45:09] CS_LOW MOSI=0xDE MISO=0x00 CLK=2MHz TIMEOUT: device powered off
+[2024-01-15 10:10:10] CS_LOW MOSI=0xAA MISO=0xAA CLK=2MHz OK: read register success
+[2024-01-16 16:00:00] CS_LOW MOSI=0x0F MISO=0x00 CLK=16MHz ERR: CPOL/CPHA mismatch suspected
