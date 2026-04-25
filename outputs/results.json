@@ -1,0 +1,14 @@
+[
+    {
+        "log": "CLK:1 MOSI:0xA1 MISO:0xFF ERR",
+        "diagnosis": "Possible SPI communication failure (timing mismatch or noise issue)"
+    },
+    {
+        "log": "CLK:1 MOSI:0xB2 MISO:0x00 TIMEOUT",
+        "diagnosis": "Slave device not responding (check wiring / clock / chip select)"
+    },
+    {
+        "log": "CLK:1 MOSI:0xC3 MISO:0xAA OK",
+        "diagnosis": "Normal operation"
+    }
+]
