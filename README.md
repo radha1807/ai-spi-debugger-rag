@@ -1,21 +1,56 @@
-# SPI Log Analyzer with AI (RAG-based Debugging System)
+AI SPI Debugger — RAG-Based SPI Log Analysis
+An AI-assisted debugging system for embedded SPI communication logs. Uses vector embeddings + retrieval-augmented generation (RAG) to classify faults and suggest root causes — grounded in historical failure cases, not just pattern matching.
 
-## Overview
-Built an AI-assisted debugging system for embedded SPI communication logs that automates fault detection and root cause analysis using vector embeddings and retrieval-based reasoning.
+What It Actually Does
 
-##Problem
-Manual SPI log debugging is time-consuming and error-prone, especially when dealing with undocumented protocols and hardware-level failures.
+Indexes a knowledge base of labeled historical SPI failures into a persistent vector database (ChromaDB)
+Embeds new query logs using sentence-transformers
+Retrieves the most semantically similar historical failures
+Sends the log + retrieved context to GPT-4o-mini for root cause analysis
+Outputs structured JSON with diagnosis, confidence, and fix suggestions
 
-##Solution
-- Parsed raw SPI logs
-- Converted logs into embeddings
-- Stored in vector database (ChromaDB)
-- Retrieved similar historical failures
-- Generated automated diagnosis
+This is real RAG — the LLM's output is grounded in retrieved context, not just its training data.
 
-## architecture
-Parser → Embeddings → Vector DB → Retrieval → Diagnosis
+Architecture
+Knowledge Base (historical failures)
+        │
+        ▼
+  [Parser] → [Embedder] → [ChromaDB (persistent)]
+                                    │
+Query Logs ──► [Parser] → [Embedder] → [Retrieval (top-k similar)]
+                                    │
+                          [GPT-4o-mini + context]
+                                    │
+                          [results.json output]
 
-##Sample Output
-<img width="1472" height="634" alt="image" src="https://github.com/user-attachments/assets/35581b0b-c259-4e25-9a64-1c7be5441ebb" />
-<img width="987" height="451" alt="image" src="https://github.com/user-attachments/assets/4d5ffa54-6a40-4e84-aaf5-28efdb1a584d" />
+
+
+Project Structure
+ai-spi-debugger-rag/
+├── data/
+│   ├── knowledge_base.txt   # Historical labeled SPI failures (RAG context)
+│   └── sample_logs.txt      # New logs to diagnose
+├── src/
+│   ├── parser.py            # Log parser — extracts status + raw text
+│   ├── embeddings.py        # Sentence-transformer embeddings
+│   ├── retrieval.py         # ChromaDB store + query (persistent)
+│   ├── llm_inference.py     # GPT-4o-mini RAG prompt + fallback
+│   └── main.py              # Pipeline orchestration + CLI
+├── outputs/
+│   └── results.json         # Diagnosis output
+├── db/                      # ChromaDB persistent storage (auto-created)
+├── .env                     # API keys (not committed)
+├── requirements.txt
+└── README.md
+
+
+
+Setup
+1. Clone and install dependencies
+bashgit clone https://github.com/radha1807/ai-spi-debugger-rag.git
+cd ai-spi-debugger-rag
+pip install -r requirements.txt
+
+
+
+
